@@ -39,4 +39,34 @@ router.post('/', async(req, res) => {
     }
 })
 
+
+router.put("/:id", async(req, res) => {
+    let exam = await Exams.findByIdAndUpdate(req.params.id, {
+        year: req.body.year,
+        department: req.body.department,
+        subject: req.body.subject,
+        dateOfExam: moment(req.body.dateOfExam).format('YYYY-MM-DD'),
+        time: req.body.time,
+    }, { new: true })
+
+    if (!exam) {
+        return res.status(400).send('Exam Schedule Cannot be updated')
+    }
+    res.send(exam)
+
+})
+
+router.delete("/:id", async(req, res) => {
+    try {
+        const exam = await Exams.findByIdAndDelete(req.params.id);
+        if (!exam) {
+            res.status(404).json({ success: false, message: `Exam ${req.params.id} Coud not be Found` })
+        } else {
+            res.status(200).json({ success: true, message: `Exam ${ exam.subject } has been deleted` })
+        }
+    } catch (err) {
+        res.status(400).json({ success: false, err: err });
+    }
+})
+
 module.exports = router;

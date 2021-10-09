@@ -28,8 +28,9 @@ mongoose.connect(mongoConnectionString, { useNewUrlParser: true, useUnifiedTopol
 //Router Connections
 const examsRouter = require('./routers/exams');
 const eventsRouter = require('./routers/events');
-
+const usersRouter = require('./routers/users');
 
 //Routers
 app.use(`/${api}/exams`, examsRouter);
 app.use(`/${api}/events`, eventsRouter);
+app.use(`/${api}/users`, usersRouter);
