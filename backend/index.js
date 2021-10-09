@@ -15,7 +15,7 @@ const mongoConnectionString = process.env.CONNECTION_STRING;
 app.use(express.json()); // For Using JSON input in request.
 app.use(cors());
 app.options('*', cors);
-//app.use(auth());
+app.use(auth());
 app.use(errorHandler);
 
 //Server Requests
