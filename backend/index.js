@@ -2,7 +2,8 @@ const express = require('express');
 const env = require('dotenv/config');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+const auth = require('./helpers/jwt');
+const errorHandler = require('./helpers/errorHandler');
 const app = express();
 
 
@@ -14,7 +15,8 @@ const mongoConnectionString = process.env.CONNECTION_STRING;
 app.use(express.json()); // For Using JSON input in request.
 app.use(cors());
 app.options('*', cors);
-
+app.use(auth());
+app.use(errorHandler);
 
 //Server Requests
 app.listen(process.env.PORT, () => { console.log('Server is up and Running') });
