@@ -12,7 +12,7 @@ router.get('/', async(req, res) => {
 })
 
 
-router.use('/login', async(req, res) => {
+router.post('/login', async(req, res) => {
     try {
         const user = await Users.findOne({ email: req.body.email });
         if (!user) {
