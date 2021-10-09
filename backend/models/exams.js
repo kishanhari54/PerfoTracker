@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 //Mongo DB Schemas
 const examSchema = mongoose.Schema({
     year: { type: String, required: true },
+    semester: { type: String, required: true },
     department: { type: String, required: true },
     subject: { type: String, required: true },
     dateOfExam: { type: Date, required: true },

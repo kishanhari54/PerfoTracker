@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const moment = require('moment');
-
+const Users = require('../models/users');
 
 
 router.get('/', async(req, res) => {
@@ -21,10 +21,27 @@ router.get('/', async(req, res) => {
 })
 
 
+router.get('/:id', async(req, res) => {
+
+    const user = await Users.findById({ _id: req.params.id }).select("department currentYear currentSemester")
+    console.log("USER" + user);
+    let filter = {};
+    if (user) {
+        filter = { department: user.department, year: user.currentYear, semester: user.currentSemester };
+    }
+
+    const examSchedule = await Exams.find(filter);
+    if (!examSchedule) {
+        res.status(500).json({ success: false });
+    }
+    res.send(examSchedule);
+})
+
 router.post('/', async(req, res) => {
     try {
         let exam = new Exams({
             year: req.body.year,
+            semester: req.body.semester,
             department: req.body.department,
             subject: req.body.subject,
             dateOfExam: moment(req.body.dateOfExam).format('YYYY-MM-DD'),
@@ -43,6 +60,7 @@ router.post('/', async(req, res) => {
 router.put("/:id", async(req, res) => {
     let exam = await Exams.findByIdAndUpdate(req.params.id, {
         year: req.body.year,
+        semester: req.body.semester,
         department: req.body.department,
         subject: req.body.subject,
         dateOfExam: moment(req.body.dateOfExam).format('YYYY-MM-DD'),
