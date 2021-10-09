@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     name: { type: String, required: true },
+    regNo: { type: String, required: true },
     joiningDate: { type: Date, default: Date.now },
     department: { type: String, default: "" },
     currentYear: { type: String, default: "1" },

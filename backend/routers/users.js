@@ -34,9 +34,10 @@ router.use('/login', async(req, res) => {
     }
 })
 
-router.get('/:id', async(req, res) => {
+router.get('/:regNo', async(req, res) => {
     try {
-        const user = await Users.findById({ _id: req.params.id }).select("-password");
+        // const user = await Users.findById({ _id: req.params.id }).select("-password");
+        const user = await Users.findOne({ regNo: req.params.regNo }).select("-password");
         if (!user) {
             res.status(404).send('User Not Found');
         }
@@ -55,6 +56,7 @@ router.post(`/register`, async(req, res) => {
             email: req.body.email,
             password: passwordHash,
             name: req.body.name,
+            regNo: req.body.regNo,
             joiningDate: moment(req.body.joiningDate).format('YYYY-MM-DD'),
             department: req.body.department,
             currentYear: req.body.currentYear,
@@ -76,15 +78,19 @@ router.post(`/register`, async(req, res) => {
 
 })
 
-router.put("/:id", async(req, res) => {
+router.put("/:regNo", async(req, res) => {
     try {
-        const userData = await Users.findById(req.params.id);
+        const userData = await Users.findOne({ regNo: req.params.regNo });
+
+        // const userData = await Users.findById(req.params.id);
         let passwordHash = req.body.password ? await bCrypt.hash(req.body.password, 10) : userData.passwordHash;
 
-        const user = await Users.findByIdAndUpdate(req.params.id, {
+        // const user = await Users.findByIdAndUpdate(req.params.id, {
+        const user = await Users.findByIdAndUpdate(userData.id, {
             email: req.body.email,
             password: passwordHash,
             name: req.body.name,
+            regNo: req.body.regNo,
             joiningDate: moment(req.body.joiningDate).format('YYYY-MM-DD'),
             department: req.body.department,
             currentYear: req.body.currentYear,
@@ -103,9 +109,11 @@ router.put("/:id", async(req, res) => {
     } catch (err) { res.send(err) }
 })
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:regNo', async(req, res) => {
     try {
-        const deleted = await Users.findByIdAndDelete(req.params.id);
+        const user = await Users.findOne({ regNo: req.params.regNo });
+        const deleted = await Users.findByIdAndDelete(user.id);
+        //  const deleted = await Users.findByIdAndDelete(req.params.id);
         if (deleted) { return res.status(200).send('The User is Deleted') } else { return res.status(400).send('The User could not be found') }
     } catch (err) {
         return res.status(500).send(err)
