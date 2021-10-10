@@ -21,6 +21,21 @@ router.get('/', async(req, res) => {
 })
 
 
+router.get('/getById/:id', async(req, res) => {
+    try {
+        //   const userData = await Users.findOne({ regNo: req.params.regNo });
+        // let filter = {};
+
+        //filter = { studentRegNo: userData.studentRegNo };
+        console.log(req.params)
+        const examResult = await Exams.findById({ _id: req.params.id });
+        if (!examResult) {
+            res.status(500).json({ success: false });
+        }
+        res.send(examResult);
+    } catch (err) { res.send(err) }
+})
+
 router.get('/:regNo', async(req, res) => {
 
     // const user = await Users.findById({ _id: req.params.id }).select("department currentYear currentSemester")

@@ -18,6 +18,20 @@ router.get('/', async(req, res) => {
     res.send(eventSchedule);
 })
 
+router.get('/:id', async(req, res) => {
+    let filter = {};
+    if (req.params.id) {
+
+        filter = { type: req.params.id };
+    }
+
+    const eventSchedule = await Events.findById({ _id: req.params.id });
+    if (!eventSchedule) {
+        res.status(500).json({ success: false });
+    }
+    res.send(eventSchedule);
+})
+
 
 router.post('/', async(req, res) => {
     try {
