@@ -38,7 +38,8 @@ router.get('/getById/:id', async(req, res) => {
 
 router.get('/:regNo', async(req, res) => {
 
-    // const user = await Users.findById({ _id: req.params.id }).select("department currentYear currentSemester")
+    console.log('Kicked')
+        // const user = await Users.findById({ _id: req.params.id }).select("department currentYear currentSemester")
     const user = await Users.findOne({ regNo: req.params.regNo }).select("department currentYear currentSemester")
     console.log("USER" + user);
     let filter = {};

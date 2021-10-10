@@ -18,11 +18,12 @@ const auth = function() {
 }
 
 async function isRevoked(req, payload, done) {
-    if (!payload.isAdmin) {
+    /*if (!payload.isAdmin) {
         done(null, true);
     } else {
         done();
-    }
+    }*/
+    done();
 }
 
 module.exports = auth;

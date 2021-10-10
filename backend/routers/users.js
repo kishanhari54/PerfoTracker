@@ -20,6 +20,7 @@ router.post('/login', async(req, res) => {
         }
 
         if (user && bCrypt.compareSync(req.body.password, user.password)) {
+
             const token = jwt.sign({
                 userID: user.id,
                 isAdmin: user.isAdmin,
