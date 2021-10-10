@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened>
+            <strong>Name : {{_login.loggedInUser.user.name}}</strong><br>
+            <strong>Reg # : {{_login.loggedInUser.user.regNo}}</strong><br>
+            <strong>{{_login.loggedInUser.user.isAdmin ? "Admin User" : "Standard User"}}</strong>
+            <mat-divider></mat-divider>
+            <ul>
+                <li *ngFor="let link of links" [routerLink]="link.route" routerLinkActive="routerLinkActive"> {{link.desc}}</li>
+            </ul>
+
+        </mat-drawer>
+        <mat-drawer-content class="content">
+
+            <router-outlet> </router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+</div>

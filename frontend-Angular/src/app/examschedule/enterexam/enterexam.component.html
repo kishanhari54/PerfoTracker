@@ -1,0 +1,56 @@
+<div class="container-fluid  center">
+    <div class="row" *ngIf="data">
+
+        <form #examForm="ngForm" (ngSubmit)="addExam(examForm)">
+
+            <div class="col-6">
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Year</mat-label>
+                    <input matInput placeholder="Year" name="year" id="year" type="string" [(ngModel)]="data.year" #year="ngModel" required>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Semester</mat-label>
+                    <input matInput placeholder="semester" id="semester " name="semester" [(ngModel)]="data.semester" #semester="ngModel" required>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Date of Exam</mat-label>
+                    <input matInput placeholder="Date" id="dateOfExam" [matDatepicker]="picker" name="dateOfExam" [(ngModel)]="data.dateOfExam" #dateOfExam="ngModel" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Time of Exam</mat-label>
+                    <input matInput placeholder="Time" id="time" type="time" name="time" [(ngModel)]="data.time" #time="ngModel" required>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+
+                <mat-form-field appearance="legacy">
+                    <mat-label>Department</mat-label>
+                    <input matInput placeholder="department" id="department" name="department" [(ngModel)]="data.department" #department="ngModel" required>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Subject</mat-label>
+                    <textarea matInput placeholder="subject" id="subject" name="subject" [(ngModel)]="data.subject" #subject="ngModel" required></textarea>
+                </mat-form-field>
+            </div>
+            <button mat-button type="submit" align="end" color="primary">Submit</button>
+            <span class="invalid" *ngIf="!examForm.valid && formSubmitted"> Kindly fix error's</span>
+        </form>
+
+    </div>
+
+</div>
